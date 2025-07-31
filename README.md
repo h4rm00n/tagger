@@ -1,81 +1,60 @@
-# Image Batch Tagger
+# 图像批量标注工具
 
-A Gradio application for batch tagging images with captions using language models.
+一个使用语言模型对图像进行批量标注的 Gradio 应用程序。
 
-## Features
+## 特性
 
-1. Set input directory for images
-2. Set output directory for tagged images and captions
-3. Rename images with custom numbering and prefixes/suffixes
-4. Use custom prompts for caption generation
-5. Choose between API models (LM Studio) and local GGUF models
-6. Test with single images or batch process entire directories
-7. Support for different quantizations (F16, Q4_K, Q8_0) for local models
+1. 设置图像输入目录
+2. 设置标注图像和文本的输出目录
+3. 使用自定义编号和前缀/后缀重命名图像
+4. 使用自定义提示生成标注文本
+5. 支持API模型（如LM Studio）进行图像标注
+6. 支持单张图像测试或整个目录的批量处理
+7. 可筛选仅显示支持视觉的模型
 
-## Installation
+## 安装
 
-1. Clone or download this repository
-2. Install the required packages:
+1. 克隆或下载此仓库
+2. 安装所需依赖：
    ```
    pip install -r requirements.txt
    ```
 
-3. For local model inference, you need to install llama.cpp:
-   ```
-   git clone https://github.com/ggerganov/llama.cpp.git
-   cd llama.cpp
-   make
-   ```
+## 使用方法
 
-## Usage
-
-1. Run the application:
+1. 运行应用程序：
    ```
    python app.py
    ```
 
-2. Open your browser and go to the URL displayed in the terminal (typically http://localhost:7860)
+2. 打开浏览器并访问终端中显示的 URL（通常是 http://localhost:7860）
 
-## Model Options
+## 模型选项
 
-### API Models
-- Connects to LM Studio API at http://localhost:1234
-- Click "Refresh Models" to fetch available models
+### API 模型
+- 连接到 LM Studio API（地址：http://localhost:1234）
+- 点击"刷新模型"获取可用模型
+- 可选择"仅显示支持视觉的模型"来筛选视觉模型
 
-### Local Models
-- Download GGUF models from Hugging Face (or HF Mirror)
-- Support for different quantizations:
-  - F16 (16.1 GB) - Highest quality, largest size
-  - Q4_K (4.92 GB) - Good balance of quality and size (default)
-  - Q8_0 (8.54 GB) - High quality, moderate size
-- Models are cached locally to avoid re-downloading
-- Uses llama.cpp for inference
+## 批量处理选项
 
-## Batch Processing Options
+1. 选择输入和输出目录
+2. 可选择为所有图像添加自定义提示
+3. 启用图像重命名功能：
+   - 自定义前缀
+   - 自定义后缀
+   - 编号起始数字
 
-1. Select input and output directories
-2. Optionally add a custom prompt for all images
-3. Enable image renaming with:
-   - Custom prefix
-   - Custom suffix
-   - Starting number for numbering
+## 单张图像测试
 
-## Single Image Testing
+上传单张图像以测试标注生成功能，而不将结果保存到磁盘。
 
-Upload a single image to test the caption generation without saving results to disk.
+## 测试
 
-## Testing
+`examples` 目录中提供了一张测试图像，可用于测试应用程序。
 
-A test image is provided in the `examples` directory. You can use this to test the application.
+## 注意事项
 
-You can also download model files directly using the provided script:
-```
-python download_model.py --quantization Q4_K
-```
-
-## Notes
-
-- Supported image formats: PNG, JPG, JPEG, BMP, GIF, TIFF, WEBP
-- When renaming images, the original file extension is preserved
-- Captions are saved as TXT files with the same name (or renamed name) as the image
-- Local model inference requires llama.cpp to be installed and built
+- 支持的图像格式：PNG, JPG, JPEG, BMP, GIF, TIFF, WEBP
+- 重命名图像时，原始文件扩展名会被保留
+- 标注文本以 TXT 文件形式保存，文件名与图像（或重命名后的图像）相同
